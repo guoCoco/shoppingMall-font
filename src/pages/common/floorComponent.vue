@@ -59,7 +59,6 @@ export default {
   .floor-two{
       border-bottom:1px solid #ddd;
   }
-
   .floor-rule{
       display: flex;
       flex-direction: row;

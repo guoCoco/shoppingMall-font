@@ -44,33 +44,20 @@
     </div>
     <!--floor one area-->
     <div class="floor">
-      <!-- <div class="floor-anomaly">
-        <div class="floor-one"><img :src="floor1_0.image" width="100%" /></div>
-        <div>
-          <div class="floor-two"><img :src="floor1_2.image" width="100%" /></div>
-          <div><img :src="floor1_3.image" width="100%" /></div>
-        </div>
-      </div>
-      <div class="floor-rule">
-        <div v-for="(item ,index) in floor1.slice(3)" :key="index">
-          <img :src="item.image" width="100%"/>
-        </div>
-      </div> -->
       <floorComponent :floor1='floor1' :floorTitle='floorName.floor1'></floorComponent>
       <floorComponent :floor1='floor2' :floorTitle='floorName.floor2'></floorComponent>
       <floorComponent :floor1='floor3' :floorTitle='floorName.floor3'></floorComponent>
-
-      <div class="hot-area">
-        <div class="hot-title">热卖商品</div>
-        <div class="hot-goods">
-          <van-list>
-            <van-row gutter="20">
-              <van-col span="12" v-for="( item, index) in hotGoods" :key="index">
-                <goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
-              </van-col>
-            </van-row>
-          </van-list>
-        </div>
+    </div>
+     <div class="hot-area">
+      <div class="hot-title">热卖商品</div>
+      <div class="hot-goods">
+        <van-list>
+          <van-row gutter="20">
+            <van-col span="12" v-for="( item, index) in hotGoods" :key="index">
+              <goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
+            </van-col>
+          </van-row>
+        </van-list>
       </div>
     </div>
   </div>
@@ -111,24 +98,16 @@ export default {
     }
   },
   created () {
-    this.$http({
-      url: 'https://www.easy-mock.com/mock/5b500bcc3720ca0b98ba8350/example/index/initData',
-      method: 'get'
+    this.$http.run('getInitData', null, (res) => {
+      this.category = res.data.category
+      this.adBanner = res.data.advertesPicture
+      this.recommendGoods = res.data.recommend
+      this.floor1 = res.data.floor1
+      this.floor2 = res.data.floor2
+      this.floor3 = res.data.floor3
+      this.floorName = res.data.floorName
+      this.hotGoods = res.data.hotGoods
     })
-      .then(response => {
-        this.category = response.data.data.category
-        this.adBanner = response.data.data.advertesPicture
-        this.recommendGoods = response.data.data.recommend
-        this.floor1 = response.data.data.floor1
-        this.floor2 = response.data.data.floor2
-        this.floor3 = response.data.data.floor3
-        this.floorName = response.data.data.floorName
-        this.hotGoods = response.data.data.hotGoods
-        console.log(this.recommendGoods)
-      })
-      .catch(error => {
-        console.log(error)
-      })
   }
 }
 </script>
